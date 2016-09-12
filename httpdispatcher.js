@@ -1,7 +1,7 @@
 var util = require('util');
 var path = require('path');
 var HttpDispatcher = function() {
-	this.listeners = { get: [ ], post: [ ] };
+	this.listeners = { get: [ ], post: [ ], options: [ ] };
 	this.filters = { before: [ ], after: [ ] };
 	this.errorListener = function(req, res) { 
 		res.writeHead(404);
@@ -27,6 +27,9 @@ HttpDispatcher.prototype.onGet = function(url, cb) {
 }	
 HttpDispatcher.prototype.onPost = function(url, cb) {
 	this.on('post', url, cb);
+}
+HttpDispatcher.prototype.onOptions = function(url, cb) {
+	this.on('options', url, cb);
 }
 HttpDispatcher.prototype.onError = function(cb) {
 	this.errorListener = cb;
